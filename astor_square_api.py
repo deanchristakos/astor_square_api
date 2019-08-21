@@ -1,6 +1,10 @@
 from flask import Flask, escape, request
 from astor_real_estate import *
 import json
+#from app import app
+
+#if __name__ == "__main__":
+#    app.run()
 
 app = Flask(__name__)
 
@@ -28,3 +32,12 @@ def building_info(bbl):
     result = get_building_attributes_by_bbl(bbl)
     return result
 
+@app.route('/tax_analysis/<bbl>')
+def tax_analysis(bbl):
+    result = get_building_tax_analysis(bbl)
+    return result
+
+@app.route('/city_comparables/<bbl>')
+def city_comparable(bbl):
+    result = get_city_tax_comparable_buildings(bbl)
+    return result
