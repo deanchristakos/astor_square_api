@@ -41,3 +41,8 @@ def tax_analysis(bbl):
 def city_comparable(bbl):
     result = get_city_tax_comparable_buildings(bbl)
     return result
+
+@app.route('/recommended_comparables/<bbl>')
+def recommended_comparable(bbl):
+    result = get_recommended_tax_comparable_buildings(bbl)
+    return result
