@@ -51,3 +51,8 @@ def recommended_comparable(bbl):
 def combined_comparable(bbl):
     result = get_combined_tax_comparable_buildings(bbl)
     return result
+
+@app.route('/mailing_address/<bbl>')
+def mailing_address(bbl):
+    result = get_mailing_address(bbl)
+    return result
