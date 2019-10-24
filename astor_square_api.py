@@ -1,5 +1,6 @@
 from flask import Flask, escape, request
 from astor_real_estate import *
+import astor_tags
 import json
 #from app import app
 
@@ -55,4 +56,31 @@ def combined_comparable(bbl):
 @app.route('/mailing_address/<bbl>')
 def mailing_address(bbl):
     result = get_mailing_address(bbl)
+    return result
+
+@app.route('/add_tax_tag/<propertyid>', methods=['POST'])
+def add_tax_tag(propertyid):
+    result = 'request_method is ' + request.method
+    if request.method == 'POST':
+        username = request.json['username']
+        tag = request.json['tag']
+        result = astor_tags.add_tax_tag(propertyid, username, tag)
+    return result
+
+@app.route('/tax_tags/<propertyid>', methods=['POST'])
+def tax_tags(propertyid):
+    result = None
+    if request.method == 'POST':
+        username = request.json['username']
+        result = astor_tags.get_tax_tags(propertyid, username)
+        pass
+    return result
+
+@app.route('/delete_tax_tag/<propertyid>', methods=['POST'])
+def delete_tax_tag(propertyid):
+    result = 'SUCCESS'
+    if request.method == 'POST':
+        username = request.json['username']
+        tag = request.json['tag']
+        result = astor_tags.delete_tax_tag(propertyid, username, tag)
     return result
