@@ -67,6 +67,7 @@ def add_tax_tag(propertyid):
         result = astor_tags.add_tax_tag(propertyid, username, tag)
     return result
 
+@app.route('/tax_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
 @app.route('/tax_tags/<propertyid>', methods=['POST'])
 def tax_tags(propertyid):
     result = None
@@ -83,4 +84,15 @@ def delete_tax_tag(propertyid):
         username = request.json['username']
         tag = request.json['tag']
         result = astor_tags.delete_tax_tag(propertyid, username, tag)
+    return result
+
+@app.route('/property_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
+@app.route('/property_tags/<propertyid>',  methods=['POST', 'GET'])
+def property_tags(propertyid):
+    result = astor_tags.get_property_tags(propertyid)
+    return result
+
+@app.route('/property_tag_list/', methods=['POST', 'GET'])
+def unique_property_tags():
+    result = astor_tags.property_tag_list()
     return result
