@@ -96,3 +96,8 @@ def property_tags(propertyid):
 def unique_property_tags():
     result = astor_tags.property_tag_list()
     return result
+
+@app.route('/taxcert_neighborhoods/')
+def taxcert_neighborhoods():
+    result = get_taxcert_neighborhoods()
+    return result
