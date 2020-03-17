@@ -1,11 +1,13 @@
 from flask import Flask, escape, request
 from astor_real_estate import *
+from astor_search import *
+from covid import *
 import astor_tags
 import json
-#from app import app
+app = Flask(__name__)
 
-#if __name__ == "__main__":
-#    app.run()
+if __name__ == "__main__":
+    app.run()
 
 app = Flask(__name__)
 
@@ -100,4 +102,14 @@ def unique_property_tags():
 @app.route('/taxcert_neighborhoods/')
 def taxcert_neighborhoods():
     result = get_taxcert_neighborhoods()
+    return result
+
+@app.route('/get_property_search/<addr>')
+def get_property_search(addr):
+    result = search_address(addr)
+    return result
+
+@app.route('/covid_data/')
+def covid_data():
+    result = get_covid_data()
     return result
