@@ -109,7 +109,12 @@ def get_property_search(addr):
     result = search_address(addr)
     return result
 
+@app.route('/covid_data/<country>')
+def covid_data(country=None):
+    result = get_covid_data(country)
+    return result
+
 @app.route('/covid_data/')
-def covid_data():
+def all_covid_data():
     result = get_covid_data()
     return result
