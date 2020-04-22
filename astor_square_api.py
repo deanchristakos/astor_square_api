@@ -1,7 +1,7 @@
 from flask import Flask, escape, request
 from astor_real_estate import *
 from astor_search import *
-from covid.covid import *
+from covid import *
 import astor_tags
 import json
 app = Flask(__name__)
