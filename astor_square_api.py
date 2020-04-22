@@ -1,7 +1,7 @@
 from flask import Flask, escape, request
 from astor_real_estate import *
 from astor_search import *
-from covid import *
+from covid.covid import *
 import astor_tags
 import json
 app = Flask(__name__)
@@ -118,3 +118,24 @@ def covid_data(country=None):
 def all_covid_data():
     result = get_covid_data()
     return result
+
+@app.route('/state_model/<state>')
+def state_model(state=None):
+    result = get_state_timeline(state)
+    return result
+
+@app.route('/state_historic_data/<state>')
+def state_historic_data(state=None):
+    result = get_historic_data(state)
+    return result
+
+@app.route('/state_stats/<state>')
+def state_stats(state=None):
+    result = get_state_stats(state)
+    return result
+
+@app.route('/covid_params/')
+def covid_params():
+    result = get_covid_parameters()
+    return result
+
