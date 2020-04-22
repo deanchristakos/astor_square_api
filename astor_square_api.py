@@ -1,4 +1,5 @@
 from flask import Flask, escape, request
+import logging
 from astor_real_estate import *
 from astor_search import *
 from covid import *
@@ -7,10 +8,12 @@ import json
 app = Flask(__name__)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
-app = Flask(__name__)
+#app = Flask(__name__)
+#app.logger.setLevel(logging.INFO)
 
+logging.basicConfig(filename='/tmp/flask.log', level=logging.INFO)
 @app.route('/')
 def hello():
     name = request.args.get("name", "World")
@@ -116,6 +119,7 @@ def covid_data(country=None):
 
 @app.route('/covid_data/')
 def all_covid_data():
+    logging.debug("covid data");
     result = get_covid_data()
     return result
 
