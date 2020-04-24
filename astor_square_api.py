@@ -123,10 +123,16 @@ def all_covid_data():
     result = get_covid_data()
     return result
 
-@app.route('/state_model/<state>')
+@app.route('/state_model/<state>', methods=["GET","POST"])
 def state_model(state=None):
-    result = get_state_timeline(state)
+
+    if request.method == "GET":
+        result = get_state_timeline(state)
+    elif request.method == "POST":
+        json = request.json
+        result = get_state_timeline(state, json)
     return result
+
 
 @app.route('/state_historic_data/<state>')
 def state_historic_data(state=None):
