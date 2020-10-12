@@ -11,7 +11,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 #app = Flask(__name__)
-#app.logger.setLevel(logging.INFO)
+app.logger.setLevel(logging.INFO)
 
 logging.basicConfig(filename='/tmp/flask.log', level=logging.INFO)
 @app.route('/')
@@ -89,6 +89,14 @@ def delete_tax_tag(propertyid):
         username = request.json['username']
         tag = request.json['tag']
         result = astor_tags.delete_tax_tag(propertyid, username, tag)
+    return result
+
+@app.route('/access_tax_properties/<username>', methods=['GET'])
+def access_tax_properties(username):
+    result = None
+    if request.method == 'GET':
+        result = astor_tags.get_access_tax_properties(username)
+        pass
     return result
 
 @app.route('/property_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
