@@ -82,6 +82,16 @@ def tax_tags(propertyid):
         pass
     return result
 
+@app.route('/required_tax_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
+@app.route('/required_tax_tags/<propertyid>', methods=['POST'])
+def required_tax_tags(propertyid):
+    result = None
+    if request.method == 'POST':
+        username = request.json['username']
+        result = astor_tags.get_required_tax_tags(propertyid, username)
+        pass
+    return result
+
 @app.route('/delete_tax_tag/<propertyid>', methods=['POST'])
 def delete_tax_tag(propertyid):
     result = 'SUCCESS'
@@ -105,31 +115,49 @@ def property_tags(propertyid):
     result = astor_tags.get_property_tags(propertyid)
     return result
 
+
 @app.route('/property_tag_list/', methods=['POST', 'GET'])
 def unique_property_tags():
     result = astor_tags.property_tag_list()
     return result
+
 
 @app.route('/taxcert_neighborhoods/')
 def taxcert_neighborhoods():
     result = get_taxcert_neighborhoods()
     return result
 
+
 @app.route('/get_property_search/<addr>')
 def get_property_search(addr):
     result = search_address(addr)
     return result
+
+
+@app.route('/address_url_match/<addr_url>')
+def address_url_match(addr_url):
+    result = get_address_url_match(addr_url)
+    return result
+
+
+@app.route('/calculated_tax/<bbl>/<year>')
+def calculated_tax(bbl, year=None):
+    result = get_calculated_tax(bbl, year)
+    return result
+
 
 @app.route('/covid_data/<country>')
 def covid_data(country=None):
     result = get_covid_data(country)
     return result
 
+
 @app.route('/covid_data/')
 def all_covid_data():
     logging.debug("covid data");
     result = get_covid_data()
     return result
+
 
 @app.route('/state_model/<state>', methods=["GET","POST"])
 def state_model(state=None):
@@ -156,4 +184,3 @@ def state_stats(state=None):
 def covid_params():
     result = get_covid_parameters()
     return result
-
