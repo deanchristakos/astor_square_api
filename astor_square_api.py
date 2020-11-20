@@ -4,6 +4,8 @@ from astor_real_estate import *
 from astor_search import *
 from covid import *
 import astor_tags
+import astor_users
+import astor_purchases
 import json
 app = Flask(__name__)
 
@@ -72,6 +74,17 @@ def add_tax_tag(propertyid):
         result = astor_tags.add_tax_tag(propertyid, username, tag)
     return result
 
+
+@app.route('/add_required_tax_tag/<propertyid>', methods=['POST'])
+def add_required_tax_tag(propertyid):
+    result = 'request_method is ' + request.method
+    if request.method == 'POST':
+        username = request.json['username']
+        tag = request.json['tag']
+        result = astor_tags.add_required_tax_tag(propertyid, username, tag)
+    return result
+
+
 @app.route('/tax_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
 @app.route('/tax_tags/<propertyid>', methods=['POST'])
 def tax_tags(propertyid):
@@ -101,6 +114,7 @@ def delete_tax_tag(propertyid):
         result = astor_tags.delete_tax_tag(propertyid, username, tag)
     return result
 
+
 @app.route('/access_tax_properties/<username>', methods=['GET'])
 def access_tax_properties(username):
     result = None
@@ -108,6 +122,17 @@ def access_tax_properties(username):
         result = astor_tags.get_access_tax_properties(username)
         pass
     return result
+
+
+@app.route('/add_access_tax_tag/', methods=['POST'])
+def add_access_tax_tag():
+    result = None
+    if request.method == 'POST':
+        username = request.json.get('username')
+        propertyid = request.json.get('propertyid')
+        result = astor_tags.add_access_tax_tag(propertyid, username)
+    return result
+
 
 @app.route('/property_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
 @app.route('/property_tags/<propertyid>',  methods=['POST', 'GET'])
@@ -145,7 +170,63 @@ def calculated_tax(bbl, year=None):
     result = get_calculated_tax(bbl, year)
     return result
 
+# stripe related
 
+
+@app.route('/add_user/', methods=['POST'])
+def add_user():
+    result = None
+    if request.method == 'POST':
+        username = request.json.get('username')
+        email = request.json.get('email')
+        stripe_id = request.json.get('stripeid')
+        dest_url = request.json.get('dest_url')
+        result = astor_users.add_user(username, email, stripe_id, dest_url)
+    return result
+
+
+@app.route('/get_user_data/<email>')
+def get_user_data(email):
+    result = astor_users.get_user_data(email)
+    return result
+
+
+@app.route('/remove_url/<email>')
+def remove_url(email):
+    result = astor_users.remove_url(email)
+    return result
+
+
+@app.route('/add_purchase/', methods=['POST'])
+def add_purchase():
+    result = None
+    if request.method == 'POST':
+        stripe_session_id = request.json.get('stripe_session_id')
+        property_id = request.json.get('property_id')
+        purchase_date = request.json.get('purchase_date')
+        result = astor_purchases.add_purchase(stripe_session_id, property_id, purchase_date)
+    return result
+
+
+@app.route('/delete_purchase/<session_id>')
+def delete_purchase(session_id):
+    result = astor_purchases.delete_purchase(session_id)
+    return result
+
+
+@app.route('/confirm_purchase/<session_id>')
+def confirm_purchase(session_id):
+    result = astor_purchases.confirm_purchase(session_id)
+    return result
+
+
+@app.route('/get_purchases/<session_id>')
+def get_purchases(session_id):
+    result = astor_purchases.get_purchases(session_id)
+    return result
+
+
+# covid_related
 @app.route('/covid_data/<country>')
 def covid_data(country=None):
     result = get_covid_data(country)
