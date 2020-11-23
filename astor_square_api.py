@@ -65,6 +65,7 @@ def mailing_address(bbl):
     result = get_mailing_address(bbl)
     return result
 
+
 @app.route('/add_tax_tag/<propertyid>', methods=['POST'])
 def add_tax_tag(propertyid):
     result = 'request_method is ' + request.method
@@ -202,9 +203,10 @@ def add_purchase():
     result = None
     if request.method == 'POST':
         stripe_session_id = request.json.get('stripe_session_id')
+        email = request.json.get('email')
         property_id = request.json.get('property_id')
         purchase_date = request.json.get('purchase_date')
-        result = astor_purchases.add_purchase(stripe_session_id, property_id, purchase_date)
+        result = astor_purchases.add_purchase(stripe_session_id, email, property_id, purchase_date)
     return result
 
 
@@ -223,6 +225,12 @@ def confirm_purchase(session_id):
 @app.route('/get_purchases/<session_id>')
 def get_purchases(session_id):
     result = astor_purchases.get_purchases(session_id)
+    return result
+
+
+@app.route('/get_purchases_by_email/<email>')
+def get_purchases_by_email(email):
+    result = astor_purchases.get_purchases_by_email(email)
     return result
 
 
