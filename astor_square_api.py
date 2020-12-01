@@ -186,8 +186,9 @@ def add_user():
         username = request.json.get('username')
         email = request.json.get('email')
         stripe_id = request.json.get('stripeid')
-        dest_url = request.json.get('dest_url')
-        result = astor_users.add_user(username, email, stripe_id, dest_url)
+        tos_checked = request.json.get('toschecked')
+        privacy_policy_checked = request.json.get('privacypolicychecked')
+        result = astor_users.add_user(username, email, stripe_id, tos_checked, privacy_policy_checked)
     return result
 
 
