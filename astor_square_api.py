@@ -40,6 +40,17 @@ def building_info(bbl):
     result = get_building_attributes_by_bbl(bbl)
     return result
 
+# broker product related
+
+
+@app.route('/broker_query_neighborhoods/')
+def broker_query_neighborhoods():
+    result = get_broker_query_neighborhoods()
+    return result
+
+# tax related
+
+
 @app.route('/tax_analysis/<bbl>')
 def tax_analysis(bbl):
     result = get_building_tax_analysis(bbl)
