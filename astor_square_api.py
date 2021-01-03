@@ -2,7 +2,6 @@ from flask import Flask, escape, request
 import logging
 from astor_real_estate import *
 from astor_search import *
-from covid import *
 import astor_tags
 import astor_users
 import astor_purchases
@@ -252,41 +251,43 @@ def get_purchases_by_email(email):
 
 
 # covid_related
-@app.route('/covid_data/<country>')
-def covid_data(country=None):
-    result = get_covid_data(country)
-    return result
-
-
-@app.route('/covid_data/')
-def all_covid_data():
-    logging.debug("covid data");
-    result = get_covid_data()
-    return result
-
-
-@app.route('/state_model/<state>', methods=["GET","POST"])
-def state_model(state=None):
-
-    if request.method == "GET":
-        result = get_state_timeline(state)
-    elif request.method == "POST":
-        json = request.json
-        result = get_state_timeline(state, json)
-    return result
-
-
-@app.route('/state_historic_data/<state>')
-def state_historic_data(state=None):
-    result = get_historic_data(state)
-    return result
-
-@app.route('/state_stats/<state>')
-def state_stats(state=None):
-    result = get_state_stats(state)
-    return result
-
-@app.route('/covid_params/')
-def covid_params():
-    result = get_covid_parameters()
-    return result
+'''
+    @app.route('/covid_data/<country>')
+    def covid_data(country=None):
+        result = get_covid_data(country)
+        return result
+    
+    
+    @app.route('/covid_data/')
+    def all_covid_data():
+        logging.debug("covid data");
+        result = get_covid_data()
+        return result
+    
+    
+    @app.route('/state_model/<state>', methods=["GET","POST"])
+    def state_model(state=None):
+    
+        if request.method == "GET":
+            result = get_state_timeline(state)
+        elif request.method == "POST":
+            json = request.json
+            result = get_state_timeline(state, json)
+        return result
+    
+    
+    @app.route('/state_historic_data/<state>')
+    def state_historic_data(state=None):
+        result = get_historic_data(state)
+        return result
+    
+    @app.route('/state_stats/<state>')
+    def state_stats(state=None):
+        result = get_state_stats(state)
+        return result
+    
+    @app.route('/covid_params/')
+    def covid_params():
+        result = get_covid_parameters()
+        return result
+'''
