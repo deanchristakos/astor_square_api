@@ -232,11 +232,20 @@ def delete_purchase(session_id):
     return result
 
 
-@app.route('/confirm_purchase/<session_id>')
+@app.route('/confirm_purchase/', methods=["GET"])
 def confirm_purchase(session_id):
     result = astor_purchases.confirm_purchase(session_id)
     return result
 
+
+@app.route('/confirm_purchase/', methods=["POST"])
+def confirm_individual_purchase():
+    result = None
+    if request.method == 'POST':
+        email = request.json.get('email')
+        property_id = request.json.get('property_id')
+        result = astor_purchases.confirm_individual_purchase(email, property_id)
+    return result
 
 @app.route('/get_purchases/<session_id>')
 def get_purchases(session_id):
@@ -248,7 +257,6 @@ def get_purchases(session_id):
 def get_purchases_by_email(email):
     result = astor_purchases.get_purchases_by_email(email)
     return result
-
 
 # covid_related
 '''
