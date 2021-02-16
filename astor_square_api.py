@@ -232,7 +232,7 @@ def delete_purchase(session_id):
     return result
 
 
-@app.route('/confirm_purchase/', methods=["GET"])
+@app.route('/confirm_purchase/<session_id>', methods=["GET"])
 def confirm_purchase(session_id):
     result = astor_purchases.confirm_purchase(session_id)
     return result
