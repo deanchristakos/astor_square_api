@@ -2,6 +2,7 @@ from flask import Flask, escape, request
 import logging
 from astor_real_estate import *
 from astor_search import *
+import astor_real_estate
 import astor_tags
 import astor_users
 import astor_purchases
@@ -256,6 +257,12 @@ def get_purchases(session_id):
 @app.route('/get_purchases_by_email/<email>')
 def get_purchases_by_email(email):
     result = astor_purchases.get_purchases_by_email(email)
+    return result
+
+
+@app.route('/get_selected_comparables/<bbl>')
+def get_selected_comparables(bbl):
+    result = astor_real_estate.get_selected_comparables(bbl)
     return result
 
 # covid_related
