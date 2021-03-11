@@ -6,6 +6,8 @@ import astor_real_estate
 import astor_tags
 import astor_users
 import astor_purchases
+import astor_search
+import datetime
 import json
 app = Flask(__name__)
 
@@ -263,6 +265,19 @@ def get_purchases_by_email(email):
 @app.route('/get_selected_comparables/<bbl>')
 def get_selected_comparables(bbl):
     result = astor_real_estate.get_selected_comparables(bbl)
+    return result
+
+
+@app.route('/log_search/', methods=['POST'])
+def log_search():
+    result = None
+    if request.method == 'POST':
+        ip_addr = request.json.get('ip_addr')
+        username = request.json.get('username')
+        search_string = request.json.get('search_string')
+        milliseconds = request.json.get('timestamp')
+        timestamp = datetime.datetime.fromtimestamp(milliseconds/1000.0)
+        result = astor_search.log_search(ip_addr, username,search_string,timestamp)
     return result
 
 # covid_related
