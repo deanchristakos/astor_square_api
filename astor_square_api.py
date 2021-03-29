@@ -7,6 +7,7 @@ import astor_tags
 import astor_users
 import astor_purchases
 import astor_search
+import astor_tax_protest
 import datetime
 import json
 app = Flask(__name__)
@@ -279,6 +280,22 @@ def log_search():
         timestamp = datetime.datetime.fromtimestamp(milliseconds/1000.0)
         result = astor_search.log_search(ip_addr, username,search_string,timestamp)
     return result
+
+
+@app.route('/save_tax_protest/', methods=['POST'])
+def save_tax_protest():
+    result = None
+    if request.method == 'POST':
+        result = astor_tax_protest.save_protest(request.json)
+    return json.dumps([result])
+
+
+@app.route('/get_tax_protest/<bbl>/<email>')
+def get_tax_protest(bbl=None, email=None):
+    result = []
+    result = astor_tax_protest.get_tax_protest(bbl, email)
+    return json.dumps(result)
+
 
 # covid_related
 '''
