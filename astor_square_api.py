@@ -269,6 +269,27 @@ def get_selected_comparables(bbl):
     return result
 
 
+@app.route('/get_user_selected_comparables/<bbl>/<username>')
+def get_user_selected_comparables(bbl, username):
+    result = astor_real_estate.get_user_selected_comparables(bbl, username)
+    return result
+
+
+@app.route('/delete_user_selected_comparables/<bbl>/<username>')
+def delete_user_selected_comparables(bbl, username):
+    result = astor_real_estate.delete_user_selected_comparables(bbl, username)
+    return result
+
+
+@app.route('/set_user_selected_comparables/<bbl>/<username>', methods=["POST"])
+def set_user_selected_comparables(bbl, username):
+    result = None
+    if request.method == 'POST':
+        comparables = request.json.get('comparables')
+        result = astor_real_estate.set_user_selected_comparables(bbl, username, comparables)
+    return result
+
+
 @app.route('/log_search/', methods=['POST'])
 def log_search():
     result = None
