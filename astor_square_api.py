@@ -318,6 +318,11 @@ def get_tax_protest(bbl=None, email=None):
     return json.dumps(result)
 
 
+@app.route('/get_management_company/<email>')
+def get_management_company(email):
+    result = astor_users.get_management_company(email)
+    return result
+
 # covid_related
 '''
     @app.route('/covid_data/<country>')
