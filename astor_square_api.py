@@ -10,38 +10,46 @@ import astor_search
 import astor_tax_protest
 import datetime
 import json
+
 app = Flask(__name__)
 
 if __name__ == "__main__":
     app.run(debug=True)
 
-#app = Flask(__name__)
+# app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
 
 logging.basicConfig(filename='/tmp/flask.log', level=logging.INFO)
+
+
 @app.route('/')
 def hello():
     name = request.args.get("name", "World")
     return f'Hello, {escape(name)}!'
 
+
 @app.route('/<name>')
 def hello_name(name):
     return "Hello {}!".format(name)
+
 
 @app.route('/nearby_buildings/<bbl>')
 def nearby_buildings(bbl):
     result = json.dumps(get_nearby_buildings(bbl))
     return result
 
+
 @app.route('/similar_buildings/<bbl>')
 def similar_buildings(bbl):
     result = json.dumps(get_similar_buildings(bbl))
     return result
 
+
 @app.route('/building_info/<bbl>')
 def building_info(bbl):
     result = get_building_attributes_by_bbl(bbl)
     return result
+
 
 # broker product related
 
@@ -51,6 +59,7 @@ def broker_query_neighborhoods():
     result = get_broker_query_neighborhoods()
     return result
 
+
 # tax related
 
 
@@ -59,25 +68,30 @@ def tax_analysis(bbl):
     result = get_building_tax_analysis(bbl)
     return result
 
+
 @app.route('/city_comparables/<bbl>')
 def city_comparable(bbl):
     result = get_city_tax_comparable_buildings(bbl)
     return result
+
 
 @app.route('/recommended_comparables/<bbl>')
 def recommended_comparable(bbl):
     result = get_recommended_tax_comparable_buildings(bbl)
     return result
 
+
 @app.route('/combined_comparables/<bbl>')
 def combined_comparable(bbl):
     result = get_combined_tax_comparable_buildings(bbl)
     return result
 
+
 @app.route('/property_address/<bbl>')
 def property_address(bbl):
     result = get_property_address(bbl)
     return result
+
 
 @app.route('/mailing_address/<bbl>')
 def mailing_address(bbl):
@@ -105,7 +119,7 @@ def add_required_tax_tag(propertyid):
     return result
 
 
-@app.route('/tax_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
+@app.route('/tax_tags/', defaults={'propertyid': None}, methods=['POST', 'GET'])
 @app.route('/tax_tags/<propertyid>', methods=['POST'])
 def tax_tags(propertyid):
     result = None
@@ -115,7 +129,8 @@ def tax_tags(propertyid):
         pass
     return result
 
-@app.route('/required_tax_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
+
+@app.route('/required_tax_tags/', defaults={'propertyid': None}, methods=['POST', 'GET'])
 @app.route('/required_tax_tags/<propertyid>', methods=['POST'])
 def required_tax_tags(propertyid):
     result = None
@@ -124,6 +139,7 @@ def required_tax_tags(propertyid):
         result = astor_tags.get_required_tax_tags(propertyid, username)
         pass
     return result
+
 
 @app.route('/delete_tax_tag/<propertyid>', methods=['POST'])
 def delete_tax_tag(propertyid):
@@ -154,8 +170,8 @@ def add_access_tax_tag():
     return result
 
 
-@app.route('/property_tags/', defaults={'propertyid': None},  methods=['POST', 'GET'])
-@app.route('/property_tags/<propertyid>',  methods=['POST', 'GET'])
+@app.route('/property_tags/', defaults={'propertyid': None}, methods=['POST', 'GET'])
+@app.route('/property_tags/<propertyid>', methods=['POST', 'GET'])
 def property_tags(propertyid):
     result = astor_tags.get_property_tags(propertyid)
     return result
@@ -189,6 +205,7 @@ def address_url_match(addr_url):
 def calculated_tax(bbl, year=None):
     result = get_calculated_tax(bbl, year)
     return result
+
 
 # stripe related
 
@@ -251,6 +268,7 @@ def confirm_individual_purchase():
         result = astor_purchases.confirm_individual_purchase(email, property_id)
     return result
 
+
 @app.route('/get_purchases/<session_id>')
 def get_purchases(session_id):
     result = astor_purchases.get_purchases(session_id)
@@ -298,8 +316,8 @@ def log_search():
         username = request.json.get('username')
         search_string = request.json.get('search_string')
         milliseconds = request.json.get('timestamp')
-        timestamp = datetime.datetime.fromtimestamp(milliseconds/1000.0)
-        result = astor_search.log_search(ip_addr, username,search_string,timestamp)
+        timestamp = datetime.datetime.fromtimestamp(milliseconds / 1000.0)
+        result = astor_search.log_search(ip_addr, username, search_string, timestamp)
     return result
 
 
@@ -322,6 +340,13 @@ def get_tax_protest(bbl=None, email=None):
 def get_management_company(email):
     result = astor_users.get_management_company(email)
     return result
+
+
+@app.route('/get_data_dictionary/')
+def get_data_dictionary():
+    result = astor_real_estate.get_Data_Dict()
+    return result
+
 
 # covid_related
 '''
