@@ -347,6 +347,12 @@ def get_data_dictionary():
     result = astor_real_estate.get_Data_Dict()
     return result
 
+@app.route('/billcheck/<bbl>/<year>')
+def get_billcheck(bbl, year=2022):
+    result = astor_real_estate.billcheck(bbl, int(year))
+
+    return result
+
 
 # covid_related
 '''
