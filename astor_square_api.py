@@ -353,6 +353,14 @@ def get_billcheck(bbl, year=2022):
 
     return result
 
+@app.route('/transactions/<bbl>/<year>')
+@app.route('/transactions/<bbl>/')
+def get_transactions(bbl, year=None):
+    if year is not None:
+        year = int(year)
+    result = astor_real_estate.transactions(bbl, year)
+
+    return result
 
 # covid_related
 '''
