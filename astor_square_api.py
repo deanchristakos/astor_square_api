@@ -362,6 +362,11 @@ def get_transactions(bbl, year=None):
 
     return result
 
+@app.route('/get_lawyer/<bbl>/')
+def get_lawyer(bbl):
+    result = astor_real_estate.get_lawyer(bbl)
+    return result
+
 # covid_related
 '''
     @app.route('/covid_data/<country>')
