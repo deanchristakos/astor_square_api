@@ -367,6 +367,10 @@ def get_lawyer(bbl):
     result = astor_real_estate.get_lawyer(bbl)
     return result
 
+@app.route('/authorized_new_user/<email>')
+def authorized_new_user(email):
+    result = astor_users.authorized_new_user(email)
+    return result
 # covid_related
 '''
     @app.route('/covid_data/<country>')
