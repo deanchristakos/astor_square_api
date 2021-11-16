@@ -219,7 +219,9 @@ def add_user():
         stripe_id = request.json.get('stripeid')
         tos_checked = request.json.get('toschecked')
         privacy_policy_checked = request.json.get('privacypolicychecked')
-        result = astor_users.add_user(username, email, stripe_id, tos_checked, privacy_policy_checked)
+        full_name = request.json.get('full_name')
+        avatar = request.json.get('avatar')
+        result = astor_users.add_user(username, email, stripe_id, tos_checked, privacy_policy_checked, full_name, avatar)
     return result
 
 
@@ -362,15 +364,24 @@ def get_transactions(bbl, year=None):
 
     return result
 
+
 @app.route('/get_lawyer/<bbl>/')
 def get_lawyer(bbl):
     result = astor_real_estate.get_lawyer(bbl)
     return result
 
+
 @app.route('/authorized_new_user/<email>')
 def authorized_new_user(email):
     result = astor_users.authorized_new_user(email)
     return result
+
+
+@app.route('/get_signup_urls/')
+def get_signup_urls():
+    result = astor_users.get_signup_urls()
+    return result
+
 # covid_related
 '''
     @app.route('/covid_data/<country>')
