@@ -382,6 +382,13 @@ def get_signup_urls():
     result = astor_users.get_signup_urls()
     return result
 
+
+@app.route('/get_auth_properties/<email>')
+def get_auth_properties(email):
+    result = astor_tags.get_auth_properties(email)
+    return result
+
+
 # covid_related
 '''
     @app.route('/covid_data/<country>')
