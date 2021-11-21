@@ -389,6 +389,18 @@ def get_auth_properties(email):
     return result
 
 
+@app.route('/get_historical_taxes/<bbl>')
+def get_historical_taxes(bbl):
+    result = astor_real_estate.get_historical_taxes(bbl)
+    return result
+
+
+@app.route('/get_energy_grade/<bbl>')
+def get_energy_grade(bbl):
+    result = astor_real_estate.get_energy_grade(bbl)
+    return result
+
+
 # covid_related
 '''
     @app.route('/covid_data/<country>')
