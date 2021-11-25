@@ -401,6 +401,12 @@ def get_energy_grade(bbl):
     return result
 
 
+@app.route('/get_violations/<bbl>')
+def get_violations(bbl):
+    result = astor_real_estate.get_violations(bbl)
+    return result
+
+
 # covid_related
 '''
     @app.route('/covid_data/<country>')
