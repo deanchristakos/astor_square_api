@@ -407,6 +407,11 @@ def get_violations(bbl):
     return result
 
 
+@app.route('/is_authorized/<user>/<bbl>')
+def is_authorized(user, bbl):
+    result = astor_real_estate.is_violations(user, bbl)
+    return result
+
 # covid_related
 '''
     @app.route('/covid_data/<country>')
