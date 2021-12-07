@@ -200,6 +200,10 @@ def address_url_match(addr_url):
     result = get_address_url_match(addr_url)
     return result
 
+@app.route('/shortcut_app_forward/<addr_url>')
+def shortcut_app_forward(addr_url):
+    result = address_app_dest(addr_url)
+    return result
 
 @app.route('/calculated_tax/<bbl>/<year>')
 def calculated_tax(bbl, year=None):
