@@ -416,6 +416,33 @@ def is_authorized(user, bbl):
     result = astor_real_estate.is_violations(user, bbl)
     return result
 
+
+@app.route('/get_contact_info/<bbl>')
+def get_contact_info(bbl):
+    result = astor_real_estate.get_contact_info(bbl)
+    return result
+
+
+@app.route('/set_management_company_contact_info/<bbl>', methods=['POST'])
+def set_management_company_contact_info(bbl):
+    if request.method == 'POST':
+        name = request.json['name']
+        email = request.json['email']
+        phone = request.json['phone']
+        result = astor_real_estate.set_management_company_contact_info(bbl, name, email, phone)
+    return result
+
+
+@app.route('/set_board_president_contact_info/<bbl>', methods=['POST'])
+def set_board_president_contact_info(bbl):
+    if request.method == 'POST':
+        name = request.json['name']
+        email = request.json['email']
+        phone = request.json['phone']
+        result = astor_real_estate.set_board_president_contact_info(bbl, name, email, phone)
+    return result
+
+
 # covid_related
 '''
     @app.route('/covid_data/<country>')
