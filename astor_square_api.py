@@ -447,3 +447,15 @@ def set_board_president_contact_info(bbl):
 def get_demo_info(demo_name):
     result = astor_users.get_demo_info(demo_name)
     return result
+
+
+@app.route('/check_tos/<email>')
+def check_tos(email):
+    result = astor_users.check_tos(email)
+    return result
+
+
+@app.route('/check_privacy_policy/<email>')
+def check_privacy_policy(email):
+    result = astor_users.check_privacy_policy(email)
+    return result
