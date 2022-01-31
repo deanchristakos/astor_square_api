@@ -467,7 +467,8 @@ def submit_email():
     result = "ERROR"
     if request.method == 'POST':
         email = request.json['email']
-        result = astor_users.submit_email(email)
+        referer = request.json['referer']
+        result = astor_users.submit_email(email, referer)
         status = 200
         if result != 'SUCCESS':
             abort(500)
