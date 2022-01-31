@@ -1,4 +1,4 @@
-from flask import Flask, escape, request
+from flask import Flask, escape, request, abort
 import logging
 from astor_real_estate import *
 from astor_search import *
@@ -459,3 +459,16 @@ def check_tos(email):
 def check_privacy_policy(email):
     result = astor_users.check_privacy_policy(email)
     return result
+
+
+@app.route('/submit_email', methods=['POST'])
+def submit_email():
+    status = 500
+    result = "ERROR"
+    if request.method == 'POST':
+        email = request.json['email']
+        result = astor_users.submit_email(email)
+        status = 200
+        if result != 'SUCCESS':
+            abort(500)
+    return result, status
