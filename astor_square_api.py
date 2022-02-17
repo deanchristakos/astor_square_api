@@ -461,6 +461,18 @@ def check_privacy_policy(email):
     return result
 
 
+@app.route('/exemption/<bbl>')
+def exemption(bbl):
+    result = astor_real_estate.get_exemption(bbl)
+    return result
+
+
+@app.route('/caprate/<bbl>')
+def get_caprate(bbl):
+    result = astor_real_estate.get_caprate(bbl)
+    return result
+
+
 @app.route('/submit_email', methods=['POST'])
 def submit_email():
     status = 500
