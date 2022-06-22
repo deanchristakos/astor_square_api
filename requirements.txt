@@ -9,7 +9,7 @@ joblib==0.14.1
 MarkupSafe==1.1.1
 marshmallow==3.3.0
 marshmallow-jsonapi==0.22.0
-numpy==1.17.4
+numpy==1.22.0
 probableparsing==0.0.1
 psycopg2==2.8.4
 python-crfsuite==0.9.6
