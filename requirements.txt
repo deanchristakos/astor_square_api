@@ -20,4 +20,4 @@ scipy==1.4.0
 six==1.13.0
 sklearn==0.0
 usaddress==0.5.10
-Werkzeug==0.16.0
+Werkzeug==2.2.3
